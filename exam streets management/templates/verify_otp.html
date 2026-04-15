@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - Exam Stress Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+    <div class="login-container">
+        <div class="login-card">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+            <h2>Verify OTP</h2>
+            <p class="subtitle">Check your email. We've sent a 6-digit code.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('verify_otp') }}" method="POST">
+                <input type="text" class="otp-input" id="otp" name="otp" maxlength="6" pattern="\d{6}"
+                    placeholder="------" autocomplete="off" required>
+                <button type="submit">Verify & Login</button>
+            </form>
+
+            <div style="margin-top: 25px;">
+                <span style="color: #94a3b8; font-size: 14px;">Didn't receive the code?</span>
+                <a href="{{ url_for('login') }}"
+                    style="color: #00f7ff; text-decoration: none; margin-left: 5px; font-weight: bold; transition: 0.3s; text-shadow: 0 0 5px rgba(0,247,255,0.5);">Try
+                    again</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

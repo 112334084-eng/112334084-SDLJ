@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Exam Stress Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+    <!-- Particle Backgrounds/Neon Styles are loaded from style.css -->
+    <div class="login-container">
+        <div class="login-card">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+            <h2>Exam Stress Manager</h2>
+            <p class="subtitle">Enter your email to receive a secure OTP</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('send_otp') }}" method="POST">
+                <input type="email" id="email" name="email" placeholder="@kanchiuniv.ac.in"
+                    pattern=".+@kanchiuniv\.ac\.in$"
+                    title="Please enter your official college email ID ending with @kanchiuniv.ac.in" required>
+                <button type="submit">Send OTP</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
